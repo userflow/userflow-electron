@@ -24,7 +24,7 @@ function startDevServer() {
         remote.getCurrentWindow().show()
       }
     })
-    window.userflow._setBuilderMessenger(new WebSocketBuilderMessenger(ws))
+    window.userflow._setTargetEnv(new ElectronTargetEnv(ws))
   })
 }
 
@@ -38,7 +38,7 @@ function stopDevServer() {
   }
 }
 
-class WebSocketBuilderMessenger {
+class ElectronTargetEnv {
   constructor(ws) {
     this.ws = ws
   }
@@ -47,11 +47,11 @@ class WebSocketBuilderMessenger {
     this.ws.close()
   }
 
-  postMessage(message) {
+  postBuilderMessage(message) {
     this.ws.send(JSON.stringify(message))
   }
 
-  onMessage(onMessage) {
+  onBuilderMessage(onMessage) {
     const listener = data => {
       const message = JSON.parse(data)
       if (message.kind && message.kind.startsWith('userflow:')) {
@@ -60,6 +60,50 @@ class WebSocketBuilderMessenger {
     }
     this.ws.on('message', listener)
     return () => this.ws.off('message', listener)
+  }
+
+  async captureScreenshot(x, y, width, height) {
+    // Capture rectangle
+    const img = await remote
+      .getCurrentWindow()
+      .capturePage({x, y, width, height})
+
+    // Add a white background
+    return new Promise(resolve => {
+      // If the display is e.g. Retina, then we'll double sizes
+      const ratio = window.devicePixelRatio
+      // Create canvas of desired size
+      const canvas = document.createElement('canvas')
+      canvas.width = width * ratio
+      canvas.height = height * ratio
+      const ctx = canvas.getContext('2d')
+      // Fill it with a black bg
+      ctx.fillStyle = 'white'
+      ctx.fillRect(0, 0, canvas.width, canvas.height)
+      // Load image
+      const domImage = new Image()
+      domImage.onload = () => {
+        ctx.drawImage(
+          // Source image (screenshot)
+          domImage,
+          // Source image (x, y) coordinates
+          0,
+          0,
+          // Source image width x height
+          width * ratio,
+          height * ratio,
+          // Destination (x, y) coordinates
+          0,
+          0,
+          // Destination width x height
+          width * ratio,
+          height * ratio
+        )
+        // All done!
+        resolve(canvas.toDataURL())
+      }
+      domImage.src = img.toDataURL()
+    })
   }
 }
 
