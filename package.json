@@ -11,5 +11,9 @@
   "bugs": "https://github.com/getuserflow/userflow-electron/issues",
   "author": "Userflow <support@getuserflow.com> (https://getuserflow.com)",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "dependencies": {
+    "userflow.js": "^0.15.0",
+    "ws": "^7.2.0"
+  }
 }
