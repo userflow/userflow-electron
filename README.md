@@ -2,15 +2,44 @@
 
 Electron support for [Userflow](https://getuserflow.com/).
 
-## Getting started
-
-### Installation
-
-Install `userflow-electron` in your Electron project:
+## Installation
 
 ```sh
 npm install userflow-electron
 ```
+
+## Quick start
+
+Add this to your renderer process:
+
+```js
+const {remote} = require('electron')
+const {loadUserflow, startDevServer} = require('userflow-electron')
+
+async function startUserflow() {
+  const userflow = await loadUserflow()
+  userflow.init(USERFLOW_TOKEN)
+  userflow.identify(USER_ID, {
+    name: USER_NAME,
+    email: USER_EMAIL,
+    signedUpAt: USER_SIGNED_UP_AT
+  })
+
+  if (remote.process.argv.some(v => v === '--userflow-dev-server')) {
+    startDevServer()
+  }
+}
+
+startUserflow()
+```
+
+When developing your Electorn app locally, start it with the `--userflow-dev-server` command line flag, e.g.:
+
+```sh
+electron . --userflow-dev-server
+```
+
+## Detailed instructions
 
 ### Load Userflow.js
 
@@ -20,11 +49,11 @@ In the renderer process, load and initialize Userflow.js. Then identify a user. 
 const {loadUserflow} = require('userflow-electron')
 
 userflow = await loadUserflow()
-userflow.init('USERFLOW_TOKEN')
-userflow.identify('USER_ID', {
-  name: 'USER_NAME',
-  email: 'USER_EMAIL',
-  signedUpAt: 'USER_SIGNED_UP_AT'
+userflow.init(USERFLOW_TOKEN)
+userflow.identify(USER_ID, {
+  name: USER_NAME,
+  email: USER_EMAIL,
+  signedUpAt: USER_SIGNED_UP_AT
 })
 ```
 
