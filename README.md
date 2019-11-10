@@ -2,7 +2,9 @@
 
 Electron support for [Userflow](https://getuserflow.com/).
 
-## Installation
+## Getting started
+
+### Installation
 
 Install `userflow-electron` in your Electron project:
 
@@ -10,7 +12,7 @@ Install `userflow-electron` in your Electron project:
 npm install userflow-electron
 ```
 
-## Load Userflow.js
+### Load Userflow.js
 
 In the renderer process, load and initialize Userflow.js. Then identify a user. `userflow-electron` re-exports `loadUserflow` from [`userflow.js`](https://github.com/getuserflow/userflow.js) for convenience:
 
@@ -28,7 +30,11 @@ userflow.identify('USER_ID', {
 
 Check [Userflow.js docs](https://github.com/getuserflow/userflow.js) for more info.
 
-## Enable flow previews in development
+### Adjust your Content-Security-Policy (CSP)
+
+If your app uses Content-Security-Policy (CSP), make sure you include [Userflow's required directives](https://getuserflow.com/docs/dev/csp).
+
+### Enable flow previews in development
 
 To be able to preview flows locally and use Userflow's element selector tool, the exported `startDevServer` function must be run.
 
