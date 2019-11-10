@@ -33,7 +33,7 @@ async function startUserflow() {
 startUserflow()
 ```
 
-When developing your Electorn app locally, start it with the `--userflow-dev-server` command line flag, e.g.:
+When developing your Electron app locally, start it with the `--userflow-dev-server` command line flag, e.g.:
 
 ```sh
 electron . --userflow-dev-server
@@ -41,7 +41,7 @@ electron . --userflow-dev-server
 
 ## Detailed instructions
 
-### Load Userflow.js
+### Load and configure Userflow.js
 
 In the renderer process, load and initialize Userflow.js. Then identify a user. `userflow-electron` re-exports `loadUserflow` from [`userflow.js`](https://github.com/getuserflow/userflow.js) for convenience:
 
