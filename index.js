@@ -10,7 +10,7 @@ let wss = null
  * mode.
  */
 function startDevServer() {
-  wss = new WebSocket.Server({port: 4059})
+  wss = new WebSocket.Server({host: '127.0.0.1', port: 4059})
   wss.on('connection', ws => {
     if (!window.userflow) {
       console.error(
