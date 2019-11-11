@@ -43,12 +43,18 @@ electron . --userflow-dev-server
 
 ### Load and configure Userflow.js
 
-In the renderer process, load and initialize Userflow.js. Then identify a user. `userflow-electron` re-exports `loadUserflow` from [`userflow.js`](https://github.com/getuserflow/userflow.js) for convenience:
+In the renderer process, load and initialize Userflow.js. Then identify a user. `userflow-electron` re-exports `loadUserflow` from [`userflow.js`](https://github.com/getuserflow/userflow.js) for convenience.
+
+Import `loadUserflow`:
 
 ```js
 const {loadUserflow} = require('userflow-electron')
+```
 
-userflow = await loadUserflow()
+As soon you have the user's information handy:
+
+```js
+const userflow = await loadUserflow()
 userflow.init(USERFLOW_TOKEN)
 userflow.identify(USER_ID, {
   name: USER_NAME,
