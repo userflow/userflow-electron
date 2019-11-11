@@ -94,4 +94,12 @@ Then run your app with e.g.:
 electron . --userflow-dev-server
 ```
 
+If you normally start your app with `npm start`/`yarn start` (e.g. if using electron-forge), you need to add `--userflow-dev-server` to your `package.json`'s `start` script instead. Example:
+
+```json
+  "scripts": {
+    "start": "electron-forge start --userflow-dev-server"
+  }
+```
+
 If needed, you can stop the server later by running the exported `stopDevServer` function.
