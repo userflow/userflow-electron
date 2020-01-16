@@ -22,7 +22,7 @@ async function startUserflow() {
   userflow.identify(USER_ID, {
     name: USER_NAME,
     email: USER_EMAIL,
-    signedUpAt: USER_SIGNED_UP_AT
+    signed_up_at: USER_SIGNED_UP_AT
   })
 
   if (remote.process.argv.some(v => v === '--userflow-dev-server')) {
@@ -59,7 +59,7 @@ userflow.init(USERFLOW_TOKEN)
 userflow.identify(USER_ID, {
   name: USER_NAME,
   email: USER_EMAIL,
-  signedUpAt: USER_SIGNED_UP_AT
+  signed_up_at: USER_SIGNED_UP_AT
 })
 ```
 
