@@ -1,6 +1,6 @@
 {
   "name": "userflow-electron",
-  "version": "1.0.1",
+  "version": "2.0.0-alpha.0",
   "description": "Userflow Electron integration",
   "main": "dist/index.cjs.js",
   "module": "index.js",
