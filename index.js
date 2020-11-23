@@ -1,6 +1,9 @@
-const {remote} = require('electron')
-const {loadUserflow} = require('userflow.js')
-const WebSocket = require('ws')
+import {remote} from 'electron'
+import userflow from 'userflow.js'
+import WebSocket from 'ws'
+
+// Re-export `userflow` so that apps can just rely on userflow-electron
+export {userflow}
 
 let wss = null
 
@@ -9,29 +12,23 @@ let wss = null
  * https://getuserflow.com) can connect to in order to preview flows in draft
  * mode.
  */
-function startDevServer() {
+export function startDevServer() {
   wss = new WebSocket.Server({host: '127.0.0.1', port: 4059})
   wss.on('connection', ws => {
-    if (!window.userflow) {
-      console.error(
-        'userflow-electron: startDevServer was run, a websocket connection was received, but userflow.js has not been loaded yet. Please run loadUserflow() first.'
-      )
-      return
-    }
     ws.on('message', data => {
       const message = JSON.parse(data)
       if (message.kind === 'userflow-electron:show') {
         remote.getCurrentWindow().show()
       }
     })
-    window.userflow._setTargetEnv(new ElectronTargetEnv(ws))
+    userflow._setTargetEnv(new ElectronTargetEnv(ws))
   })
 }
 
 /**
  * Stops the local WebSocket server.
  */
-function stopDevServer() {
+export function stopDevServer() {
   if (wss) {
     wss.close()
     wss = null
@@ -105,12 +102,4 @@ class ElectronTargetEnv {
       domImage.src = img.toDataURL()
     })
   }
-}
-
-module.exports = {
-  startDevServer,
-  stopDevServer,
-
-  // Re-export loadUserflow so that apps can just rely on userflow-electron
-  loadUserflow
 }

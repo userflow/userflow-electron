@@ -2,8 +2,13 @@
   "name": "userflow-electron",
   "version": "1.0.1",
   "description": "Userflow Electron integration",
-  "main": "index.js",
+  "main": "dist/index.cjs.js",
+  "module": "index.js",
   "homepage": "https://github.com/getuserflow/userflow-electron",
+  "scripts": {
+    "build": "rollup index.js --file dist/index.cjs.js --format cjs",
+    "prepublishOnly": "npm run build"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/getuserflow/userflow-electron.git"
@@ -13,7 +18,10 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
-    "userflow.js": "^0.15.0",
+    "userflow.js": "^1.8.0",
     "ws": "^7.2.0"
+  },
+  "devDependencies": {
+    "rollup": "^2.33.3"
   }
 }

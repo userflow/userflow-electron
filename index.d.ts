@@ -2,4 +2,4 @@ export function startDevServer(): void
 
 export function stopDevServer(): void
 
-export {loadUserflow} from 'userflow.js'
+export {default as userflow} from 'userflow.js'

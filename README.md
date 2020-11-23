@@ -14,10 +14,9 @@ Add this to your renderer process:
 
 ```js
 const {remote} = require('electron')
-const {loadUserflow, startDevServer} = require('userflow-electron')
+const {userflow, startDevServer} = require('userflow-electron')
 
-async function startUserflow() {
-  const userflow = await loadUserflow()
+function startUserflow() {
   userflow.init(USERFLOW_TOKEN)
   userflow.identify(USER_ID, {
     name: USER_NAME,
@@ -39,22 +38,31 @@ When developing your Electron app locally, start it with the `--userflow-dev-ser
 electron . --userflow-dev-server
 ```
 
+**Important**: Since Electron v10.0, you must set `enableRemoteModule` to `true` when you instantiate your `BrowserWindow` to allow the renderer process to access `electron.remote` in order to read command line flags. Example:
+
+```js
+const w = new BrowserWindow({
+  webPreferences: {
+    enableRemoteModule: true
+  }
+})
+```
+
 ## Detailed instructions
 
 ### Load and configure Userflow.js
 
-In the renderer process, load and initialize Userflow.js. Then identify a user. `userflow-electron` re-exports `loadUserflow` from [`userflow.js`](https://github.com/getuserflow/userflow.js) for convenience.
+In the renderer process, initialize Userflow.js. Then identify a user. `userflow-electron` re-exports `userflow` from [`userflow.js`](https://github.com/getuserflow/userflow.js) for convenience.
 
-Import `loadUserflow`:
+Import `userflow`:
 
 ```js
-const {loadUserflow} = require('userflow-electron')
+const {userflow} = require('userflow-electron')
 ```
 
 As soon you have the user's information handy:
 
 ```js
-const userflow = await loadUserflow()
 userflow.init(USERFLOW_TOKEN)
 userflow.identify(USER_ID, {
   name: USER_NAME,
