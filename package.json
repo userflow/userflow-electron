@@ -15,7 +15,7 @@
     "url": "git://github.com/userflow/userflow-electron.git"
   },
   "bugs": "https://github.com/userflow/userflow-electron/issues",
-  "author": "Userflow <support@getuserflow.com> (https://getuserflow.com)",
+  "author": "Userflow <support@userflow.com> (https://userflow.com)",
   "license": "MIT",
   "private": false,
   "dependencies": {

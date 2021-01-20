@@ -6,8 +6,7 @@ let wss: WebSocket.Server | null = null
 
 /**
  * Starts a local WebSocket server, which Userflow's Flow Builder (running at
- * https://getuserflow.com) can connect to in order to preview flows in draft
- * mode.
+ * https://userflow.com) can connect to in order to preview flows in draft mode.
  */
 export function startDevServer(): void {
   wss = new WebSocket.Server({host: '127.0.0.1', port: 4059})

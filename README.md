@@ -1,6 +1,6 @@
 # userflow-electron
 
-Electron support for [Userflow](https://getuserflow.com/).
+Electron support for [Userflow](https://userflow.com/).
 
 ## Installation
 
@@ -53,7 +53,7 @@ const w = new BrowserWindow({
 
 ### Load and configure Userflow.js
 
-In the renderer process, initialize Userflow.js. Then identify a user. Import the `userflow` object from [`userflow.js`](https://github.com/getuserflow/userflow.js).
+In the renderer process, initialize Userflow.js. Then identify a user. Import the `userflow` object from [`userflow.js`](https://github.com/userflow/userflow.js).
 
 Import `userflow`:
 
@@ -72,11 +72,11 @@ userflow.identify(USER_ID, {
 })
 ```
 
-Check [Userflow.js docs](https://github.com/getuserflow/userflow.js) for more info.
+Check [Userflow.js docs](https://github.com/userflow/userflow.js) for more info.
 
 ### Adjust your Content-Security-Policy (CSP)
 
-If your app uses Content-Security-Policy (CSP), make sure you include [Userflow's required directives](https://getuserflow.com/docs/dev/csp).
+If your app uses Content-Security-Policy (CSP), make sure you include [Userflow's required directives](https://userflow.com/docs/dev/csp).
 
 ### Enable flow previews in development
 
