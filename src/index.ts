@@ -2,21 +2,18 @@ import {remote} from 'electron'
 import userflow from 'userflow.js'
 import WebSocket from 'ws'
 
-// Re-export `userflow` so that apps can just rely on userflow-electron
-export {userflow}
-
-let wss = null
+let wss: WebSocket.Server | null = null
 
 /**
  * Starts a local WebSocket server, which Userflow's Flow Builder (running at
  * https://getuserflow.com) can connect to in order to preview flows in draft
  * mode.
  */
-export function startDevServer() {
+export function startDevServer(): void {
   wss = new WebSocket.Server({host: '127.0.0.1', port: 4059})
   wss.on('connection', ws => {
     ws.on('message', data => {
-      const message = JSON.parse(data)
+      const message = JSON.parse(String(data))
       if (message.kind === 'userflow-electron:show') {
         remote.getCurrentWindow().show()
       }
@@ -28,7 +25,7 @@ export function startDevServer() {
 /**
  * Stops the local WebSocket server.
  */
-export function stopDevServer() {
+export function stopDevServer(): void {
   if (wss) {
     wss.close()
     wss = null
@@ -36,7 +33,7 @@ export function stopDevServer() {
 }
 
 class ElectronTargetEnv {
-  constructor(ws) {
+  constructor(readonly ws: WebSocket) {
     this.ws = ws
   }
 
@@ -44,12 +41,12 @@ class ElectronTargetEnv {
     this.ws.close()
   }
 
-  postBuilderMessage(message) {
+  postBuilderMessage(message: Record<string, unknown>) {
     this.ws.send(JSON.stringify(message))
   }
 
-  onBuilderMessage(onMessage) {
-    const listener = data => {
+  onBuilderMessage(onMessage: (message: Record<string, unknown>) => void) {
+    const listener = (data: any) => {
       const message = JSON.parse(data)
       if (message.kind && message.kind.startsWith('userflow:')) {
         onMessage(message)
@@ -59,7 +56,7 @@ class ElectronTargetEnv {
     return () => this.ws.off('message', listener)
   }
 
-  async captureScreenshot(x, y, width, height) {
+  async captureScreenshot(x: number, y: number, width: number, height: number) {
     // Capture rectangle
     const img = await remote
       .getCurrentWindow()
@@ -73,7 +70,7 @@ class ElectronTargetEnv {
       const canvas = document.createElement('canvas')
       canvas.width = width * ratio
       canvas.height = height * ratio
-      const ctx = canvas.getContext('2d')
+      const ctx = canvas.getContext('2d')!
       // Fill it with a black bg
       ctx.fillStyle = 'white'
       ctx.fillRect(0, 0, canvas.width, canvas.height)

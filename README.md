@@ -5,7 +5,7 @@ Electron support for [Userflow](https://getuserflow.com/).
 ## Installation
 
 ```sh
-npm install userflow-electron
+npm install userflow.js userflow-electron
 ```
 
 ## Quick start
@@ -14,6 +14,7 @@ Add this to your renderer process:
 
 ```js
 const {remote} = require('electron')
+const userflow = require('userflow.js')
 const {userflow, startDevServer} = require('userflow-electron')
 
 function startUserflow() {
@@ -52,12 +53,12 @@ const w = new BrowserWindow({
 
 ### Load and configure Userflow.js
 
-In the renderer process, initialize Userflow.js. Then identify a user. `userflow-electron` re-exports `userflow` from [`userflow.js`](https://github.com/getuserflow/userflow.js) for convenience.
+In the renderer process, initialize Userflow.js. Then identify a user. Import the `userflow` object from [`userflow.js`](https://github.com/getuserflow/userflow.js).
 
 Import `userflow`:
 
 ```js
-const {userflow} = require('userflow-electron')
+const userflow = require('userflow.js')
 ```
 
 As soon you have the user's information handy:
