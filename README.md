@@ -15,7 +15,7 @@ Add this to your renderer process:
 ```js
 const {remote} = require('electron')
 const userflow = require('userflow.js')
-const {userflow, startDevServer} = require('userflow-electron')
+const {startDevServer} = require('userflow-electron')
 
 function startUserflow() {
   userflow.init(USERFLOW_TOKEN)
