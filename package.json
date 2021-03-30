@@ -5,7 +5,7 @@
   "homepage": "https://github.com/userflow/userflow-electron",
   "main": "dist/userflow-electron.umd.js",
   "module": "dist/userflow-electron.es.js",
-  "typings": "dist/types/userflow-electron.d.ts",
+  "typings": "dist/types/index.d.ts",
   "scripts": {
     "build": "rm -rf dist/ && rollup -c rollup.config.js",
     "prepublishOnly": "npm run build"
